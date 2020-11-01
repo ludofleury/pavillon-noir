@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./php/public:/var/app/public
+    links:
+      - php
+    ports:
+      - 80:80
+
+  php:
+    build:
+      context: ./php
+      target: dev
+      dockerfile: Dockerfile
+    depends_on:
+      - postgresql
+    links:
+      - postgresql
+    volumes:
+      - ./php:/var/app
+    environment:
+      - XDEBUG_CONFIG="idekey=xdebug"
+    ports:
+      - 9000:9000
+
+  postgresql:
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pirate
+    volumes:
+        - ./postgresql/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
