@@ -4,7 +4,6 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
       - ./php/public:/var/app/public
     links:
       - php

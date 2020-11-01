@@ -1,2 +1,2 @@
 FROM nginx
-COPY conf.d/php-symfony.conf /etc/nginx/php-symfony.conf
+COPY ./conf.d/php-symfony.conf /etc/nginx/conf.d/default.conf
