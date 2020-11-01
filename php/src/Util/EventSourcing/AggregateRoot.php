@@ -1,12 +1,17 @@
 <?php
 
 namespace App\Util\EventSourcing;
+use Ramsey\Uuid\UuidInterface;
 
 abstract class AggregateRoot
 {
-    protected $stream = [];
+    protected UuidInterface $id;
 
-    protected $sequence = -1;
+    protected array $stream = [];
+
+    protected int $sequence = -1;
+
+    abstract public function getId(): UuidInterface;
 
     public function getUncommittedEvents(): Stream
     {
@@ -16,8 +21,45 @@ abstract class AggregateRoot
         return $stream;
     }
 
-    protected function nextSequence(): int
+    static public function load(UuidInterface $id, Stream $stream): self
     {
-        return ++$this->sequence;
+        $aggregateRoot = new static();
+        $aggregateRoot->id = $id;
+
+        foreach ($stream as $message) {
+            ++$aggregateRoot->sequence;
+            $aggregateRoot->handle($message->getEvent());
+        }
+    }
+
+    protected function apply(Event $event): void
+    {
+        $this->handle($event);
+
+        ++$this->sequence;
+        $this->stream[] = new Message(
+            static::class,
+            $this->getId(),
+            $this->sequence,
+            $event
+        );
+    }
+
+    protected function handle(Event $event): void
+    {
+        $method = $this->getApplyMethod($event);
+
+        if (!method_exists($this, $method)) {
+            return;
+        }
+
+        $this->$method($event);
+    }
+
+    private function getApplyMethod(Event $event): string
+    {
+        $classParts = explode('\\', Message::class);
+
+        return 'apply'.end($classParts);
     }
 }

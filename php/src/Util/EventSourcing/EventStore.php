@@ -4,36 +4,33 @@ namespace App\Util\EventSourcing;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Ramsey\Uuid\UuidInterface;
 
 class EventStore extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Event::class);
+        parent::__construct($registry, Message::class);
     }
 
-    public function save(Stream $stream)
+    public function append(Stream $stream): void
     {
         $manager = $this->getEntityManager();
         $connection = $this->getEntityManager()->getConnection();
-        $connection->beginTransaction();
 
-        try {
-
-            foreach ($stream as $event) {
-                $manager->persist($event);
-            }
-
+        foreach ($stream as $event) {
+            $manager->persist($event);
             $manager->flush();
-
-            $connection->commit();
-        } catch (\Exception $e) {
-            $connection->rollBack();
         }
     }
 
-    public function load(): Stream
+    public function load(UuidInterface $aggregateRootId): Stream
     {
-
+        $messages = $this->createQueryBuilder('e')
+            ->where('e.aggregateRootId = :id')
+            ->setParameter('id', $aggregateRootId)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

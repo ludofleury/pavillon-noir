@@ -4,7 +4,7 @@ namespace App\Character\Event;
 
 use App\Util\EventSourcing\Event;
 
-class CharacterCreated extends Event
+class CharacterCreated implements Event
 {
     private string $firstname;
 
@@ -20,15 +20,13 @@ class CharacterCreated extends Event
     // private array $characteristics;
     // private array $skills;/**
 
-    public function __construct(int $sequence, string $firstname, string $lastname, string $nickname, int $age, bool $gender)
+    public function __construct(string $firstname, string $lastname, string $nickname, int $age, bool $gender)
     {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->nickname = $nickname;
         $this->age = $age;
         $this->gender = $gender;
-
-        parent::__construct($sequence, $this->jsonSerialize());
     }
 
     public function getFirstname(): string
@@ -66,15 +64,26 @@ class CharacterCreated extends Event
         return $this->gender;
     }
 
-    public function jsonSerialize(): array
+    public function toArray(): array
     {
         return  [
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
             'nickname' => $this->nickname,
             'age' => $this->age,
-            'gender' => $this->gender
+            'gender' => $this->gender,
         ];
+    }
+
+    static public function fromArray(array $data): self
+    {
+        return new self(
+            $data['firstname'],
+            $data['lastname'],
+            $data['nickname'],
+            $data['age'],
+            $data['gender'],
+        );
     }
 
 }

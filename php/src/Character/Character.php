@@ -4,6 +4,8 @@ namespace App\Character;
 
 use App\Character\Event\CharacterCreated;
 use App\Util\EventSourcing\AggregateRoot;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class Character extends AggregateRoot
 {
@@ -24,14 +26,19 @@ class Character extends AggregateRoot
     public static function create(string $firstname, string $lastname, string $nickname, int $age, bool $gender): Character
     {
         $character = new self();
-        $event = new CharacterCreated($character->nextSequence() ,$firstname, $lastname, $nickname, $age, $gender);
-        $character->stream[] = $event;
-        $character->applyCharacterCreated($event);
+        $character->id = Uuid::uuid4();
+        $event = new CharacterCreated($firstname, $lastname, $nickname, $age, $gender);
+        $character->apply($event);
 
         return $character;
     }
 
-    public function applyCharacterCreated(CharacterCreated $event)
+    public function getId(): UuidInterface
+    {
+        return $this->id;
+    }
+
+    protected function applyCharacterCreated(CharacterCreated $event)
     {
         $this->firstname = $event->getFirstname();
         $this->lastname = $event->getLastname();
