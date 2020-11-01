@@ -3,8 +3,9 @@
 namespace App\Character;
 
 use App\Character\Event\CharacterCreated;
+use App\Util\EventSourcing\AggregateRoot;
 
-class Character
+class Character extends AggregateRoot
 {
     private string $firstname;
 
@@ -16,17 +17,15 @@ class Character
 
     private bool $gender;
 
-    private array $_events;
-
     private function __construct()
     {
     }
 
-    public static function createCharacter(string $firstname, string $lastname, string $nickname, int $age, bool $gender): Character
+    public static function create(string $firstname, string $lastname, string $nickname, int $age, bool $gender): Character
     {
         $character = new self();
-        $event = new CharacterCreated($character->firstname, $character->lastname, $character->nickname, $character->age, $character->gender);
-        $character->_events[] = $event;
+        $event = new CharacterCreated($firstname, $lastname, $nickname, $age, $gender);
+        $character->stream[] = $event;
         $character->applyCharacterCreated($event);
 
         return $character;
@@ -38,6 +37,6 @@ class Character
         $this->lastname = $event->getLastname();
         $this->nickname = $event->getNickname();
         $this->age = $event->getAge();
-        $this->gender = $event->isGender();
+        $this->gender = $event->getGender();
     }
 }

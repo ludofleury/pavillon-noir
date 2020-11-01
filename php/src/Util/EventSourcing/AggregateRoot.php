@@ -4,7 +4,15 @@ namespace App\Util\EventSourcing;
 
 abstract class AggregateRoot
 {
-    private $stream = [];
+    protected $stream = [];
 
-    private $sequence = -1;
+    protected $sequence = -1;
+
+    public function getUncommittedEvents(): Stream
+    {
+        $stream = new Stream($this->stream);
+        $this->stream = [];
+
+        return $stream;
+    }
 }

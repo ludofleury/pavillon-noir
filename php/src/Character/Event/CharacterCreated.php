@@ -49,7 +49,17 @@ class CharacterCreated extends Event
         return $this->age;
     }
 
-    public function isGender(): bool
+    public function isMale(): bool
+    {
+        return $this->gender;
+    }
+
+    public function isFemale(): bool
+    {
+        return !$this->gender;
+    }
+
+    public function getGender(): bool
     {
         return $this->gender;
     }
