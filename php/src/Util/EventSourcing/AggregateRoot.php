@@ -15,4 +15,9 @@ abstract class AggregateRoot
 
         return $stream;
     }
+
+    protected function nextSequence(): int
+    {
+        return ++$this->sequence;
+    }
 }

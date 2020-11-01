@@ -20,13 +20,15 @@ class CharacterCreated extends Event
     // private array $characteristics;
     // private array $skills;/**
 
-    public function __construct(string $firstname, string $lastname, string $nickname, int $age, bool $gender)
+    public function __construct(int $sequence, string $firstname, string $lastname, string $nickname, int $age, bool $gender)
     {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->nickname = $nickname;
         $this->age = $age;
         $this->gender = $gender;
+
+        parent::__construct($sequence, $this->jsonSerialize());
     }
 
     public function getFirstname(): string
@@ -63,4 +65,16 @@ class CharacterCreated extends Event
     {
         return $this->gender;
     }
+
+    public function jsonSerialize(): array
+    {
+        return  [
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'nickname' => $this->nickname,
+            'age' => $this->age,
+            'gender' => $this->gender
+        ];
+    }
+
 }

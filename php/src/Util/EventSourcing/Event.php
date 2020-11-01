@@ -2,32 +2,43 @@
 
 namespace App\Util\EventSourcing;
 
-use JsonSerializable;
 use DateTimeImmutable;
+use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
-abstract class Event implements JsonSerializable
+/**
+ * @ORM\Entity(repositoryClass="App\Util\EventSourcing\EventStore")
+ * @ORM\Table(name="events")
+ */
+class Event
 {
-    private string $id;
+    /**
+     * @ORM\Id()
+     * @ORM\Column(type="uuid")
+     */
+    private UuidInterface $id;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
     private int $sequence;
 
-    private array $data;
+    /**
+     * @ORM\Column(type="json")
+     */
+    protected array $data;
 
+    /**
+     * @ORM\Column(type="date_immutable")
+     */
     private DateTimeImmutable $recordedAt;
 
     public function __construct(int $sequence, array $data)
     {
-        $this->id = 1;
+        $this->id = Uuid::uuid1();
+        $this->sequence = $sequence;
         $this->recordedAt = new DateTimeImmutable();
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'sequence' => $this->sequence,
-            'data' => $this->data, // ->jsonSerialize
-            'recordedAt' => $this->recordedAt
-        ];
+        $this->data = $data;
     }
 }

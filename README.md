@@ -63,3 +63,14 @@ From your host, with the docker-compose stack already up
 ```
 docker-compose exec php vendor/bin/phpunit --testdox
 ```
+
+
+### Specification process
+
+Event storming available on [gdrive](https://docs.google.com/document/d/1Ne8oRaANIvFzSDxvzlruglWoT8TnyzkJl6xL3PJRFkA/edit)
+
+
+### TODO & Known limitation
+
+- Docker  & docker-compose are slow (docker-compose cmd are failling sometimes)
+-  Mapping with ORM is not persisting any data

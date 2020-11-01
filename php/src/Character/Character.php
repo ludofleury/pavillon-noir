@@ -24,7 +24,7 @@ class Character extends AggregateRoot
     public static function create(string $firstname, string $lastname, string $nickname, int $age, bool $gender): Character
     {
         $character = new self();
-        $event = new CharacterCreated($firstname, $lastname, $nickname, $age, $gender);
+        $event = new CharacterCreated($character->nextSequence() ,$firstname, $lastname, $nickname, $age, $gender);
         $character->stream[] = $event;
         $character->applyCharacterCreated($event);
 
