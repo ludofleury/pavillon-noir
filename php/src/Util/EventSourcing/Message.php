@@ -62,6 +62,7 @@ final class Message
 
     public function getEvent(): Event
     {
-        $this->eventType::fromArray($this->data);
+        $event = $this->eventType::fromArray($this->data);
+        return $event;
     }
 }

@@ -8,6 +8,7 @@ use App\Util\EventSourcing\EventStore;
 use App\Util\EventSourcing\Message;
 use Doctrine\ORM\EntityManagerInterface;
 use Laminas\EventManager\Event;
+use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,13 +21,26 @@ class TestController
     }
 
     /**
-     * @Route("/character")
+     * @Route("/save")
      */
-    public function number(): Response
+    public function save(): Response
     {
-       $character = Character::create('Jane', 'Doe', 'Bloody Lady', 20, false);
+       $character = Character::create('John', 'Doe', 'Bloody Sir', 20, true);
 
        $repository = new Repository($this->es);
        $repository->save($character);
+
+        return new Response();
+    }
+
+    /**
+     * @Route("/load/{id}")
+     */
+    public function load(string $id): Response
+    {
+        $repository = new Repository($this->es);
+        $character = $repository->load(Uuid::fromString($id));
+        
+        return new Response();
     }
 }

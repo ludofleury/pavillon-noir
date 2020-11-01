@@ -30,6 +30,8 @@ abstract class AggregateRoot
             ++$aggregateRoot->sequence;
             $aggregateRoot->handle($message->getEvent());
         }
+
+        return $aggregateRoot;
     }
 
     protected function apply(Event $event): void
@@ -50,6 +52,7 @@ abstract class AggregateRoot
         $method = $this->getApplyMethod($event);
 
         if (!method_exists($this, $method)) {
+            die('toto');
             return;
         }
 
@@ -58,7 +61,7 @@ abstract class AggregateRoot
 
     private function getApplyMethod(Event $event): string
     {
-        $classParts = explode('\\', Message::class);
+        $classParts = explode('\\', get_class($event));
 
         return 'apply'.end($classParts);
     }

@@ -19,7 +19,7 @@ class Character extends AggregateRoot
 
     private bool $gender;
 
-    private function __construct()
+    protected function __construct()
     {
     }
 

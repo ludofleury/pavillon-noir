@@ -32,5 +32,7 @@ final class DoctrineEventStore extends ServiceEntityRepository implements EventS
             ->getQuery()
             ->getResult()
         ;
+
+        return new Stream($messages);
     }
 }
