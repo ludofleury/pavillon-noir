@@ -11,7 +11,7 @@ use Ramsey\Uuid\UuidInterface;
  * @ORM\Entity(repositoryClass="App\Util\EventSourcing\EventStore")
  * @ORM\Table(name="events")
  */
-class Message
+final class Message
 {
     /**
      * @ORM\Id()

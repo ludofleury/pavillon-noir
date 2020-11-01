@@ -3,19 +3,20 @@
 namespace App\Controller;
 
 use App\Character\Character;
+use App\Character\Repository;
+use App\Util\EventSourcing\EventStore;
 use App\Util\EventSourcing\Message;
 use Doctrine\ORM\EntityManagerInterface;
+use Laminas\EventManager\Event;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 class TestController
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EventStore $es)
     {
-        $this->em = $em;
+        $this->es = $es;
     }
 
     /**
@@ -25,6 +26,7 @@ class TestController
     {
        $character = Character::create('Jane', 'Doe', 'Bloody Lady', 20, false);
 
-       $this->em->getRepository(Message::class)->save($character->getUncommittedEvents());
+       $repository = new Repository($this->es);
+       $repository->save($character);
     }
 }
