@@ -12,20 +12,45 @@ class CharacterCreated extends Event
 
     private string $nickname;
 
-    private string $age;
+    private int $age;
 
     private bool $gender;
 
     // private string $background;
-    // private array $characteristic;
+    // private array $characteristics;
     // private array $skills;/**
 
-    public function __construct(string $firstname, string $lastname, string $nickname, string $age, bool $gender)
+    public function __construct(string $firstname, string $lastname, string $nickname, int $age, bool $gender)
     {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->nickname = $nickname;
         $this->age = $age;
         $this->gender = $gender;
+    }
+
+    public function getFirstname(): string
+    {
+        return $this->firstname;
+    }
+
+    public function getLastname(): string
+    {
+        return $this->lastname;
+    }
+
+    public function getNickname(): string
+    {
+        return $this->nickname;
+    }
+
+    public function getAge(): int
+    {
+        return $this->age;
+    }
+
+    public function isGender(): bool
+    {
+        return $this->gender;
     }
 }
