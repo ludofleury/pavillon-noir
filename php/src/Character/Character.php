@@ -4,15 +4,17 @@ namespace App\Character;
 
 class Character
 {
-    private int $health;
+    private string $firstname;
+
+    private string $lastname;
+
+    private string $nickname;
+
+    private string $age;
+
+    private bool $gender;
 
     public function __construct()
     {
-        $this->health = 10;
-    }
-
-    public function getHealth(): int
-    {
-        return $this->health;
     }
 }
