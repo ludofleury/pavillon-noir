@@ -6,9 +6,11 @@ local:
 	mkdir -p postgresql/data
 	rm -rf php/vendor
 	docker-compose build
-	docker-compose run php composer install
-	docker-compose run php bin/console doctrine:database:create
-	docker-compose run php bin/console doctrine:schema:create
+	$(MAKE) up
+	docker-compose exec php composer install
+	docker-compose exec php bin/console doctrine:database:create
+	docker-compose exec php bin/console doctrine:schema:create
+	$(MAKE) down
 
 up:
 	docker-compose up -d
