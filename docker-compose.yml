@@ -4,7 +4,7 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - ./php/public:/var/app/public
+      - ./php/public:/var/app/public:cached
     links:
       - php
     ports:
@@ -20,7 +20,8 @@ services:
     links:
       - postgresql
     volumes:
-      - ./php:/var/app
+      - ./php:/var/app:cached
+      - ./php/var:/var/app/var:delegated
     environment:
       - XDEBUG_CONFIG="idekey=xdebug"
     ports:
@@ -32,6 +33,6 @@ services:
     environment:
       POSTGRES_PASSWORD: pirate
     volumes:
-        - ./postgresql/data:/var/lib/postgresql/data
+        - ./postgresql/data:/var/lib/postgresql/data:delegated
     ports:
       - 5432:5432
