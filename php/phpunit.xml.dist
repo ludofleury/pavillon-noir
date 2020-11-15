@@ -5,6 +5,13 @@
     <include>
       <directory suffix=".php">src</directory>
     </include>
+    <exclude>
+      <file>src/App/Kernel.php</file>
+    </exclude>
+    <report>
+      <clover outputFile="reports/test/coverage/clover.xml"/>
+      <html outputDirectory="reports/test/coverage/html" lowUpperBound="50" highLowerBound="90"/>
+    </report>
   </coverage>
   <php>
     <ini name="error_reporting" value="-1"/>
@@ -16,4 +23,8 @@
       <directory>tests</directory>
     </testsuite>
   </testsuites>
+  <logging>
+    <junit outputFile="reports/test/junit.xml"/>
+    <testdoxHtml outputFile="reports/test/testdox.html"/>
+  </logging>
 </phpunit>
