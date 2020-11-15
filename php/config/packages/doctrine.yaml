@@ -13,6 +13,6 @@ doctrine:
             EventStore:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/EventSourcing/'
-                prefix: 'EventSourcing'
+                dir: '%kernel.project_dir%/src/EventSourcing/EventStore'
+                prefix: 'EventSourcing\EventStore'
                 alias: EventStore

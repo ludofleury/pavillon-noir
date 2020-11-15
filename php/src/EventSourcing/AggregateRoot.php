@@ -3,6 +3,7 @@
 namespace EventSourcing;
 
 use Ramsey\Uuid\UuidInterface;
+use EventSourcing\EventStore\Message;
 
 abstract class AggregateRoot extends Entity
 {

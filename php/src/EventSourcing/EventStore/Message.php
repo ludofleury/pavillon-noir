@@ -1,17 +1,18 @@
 <?php
 
-namespace EventSourcing;
+namespace EventSourcing\EventStore;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use EventSourcing\Event;
 
 /**
  * @ORM\Entity(repositoryClass="EventSourcing\EventStore")
  * @ORM\Table(name="events")
  */
-final class Message
+class Message
 {
     /**
      * @ORM\Id()
