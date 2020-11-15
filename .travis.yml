@@ -1,0 +1,26 @@
+version: ~> 1.0
+language: minimal
+
+services:
+  - docker
+
+before_install:
+  - mkdir reports
+
+install:
+  - docker build -t blackflag/php:test --target test php/
+  - docker run blackflag/php:test php bin/console about
+
+jobs:
+  include:
+    - stage: "Tests"           
+      name: "Unit Tests"
+      script: docker run -v $PWD/reports:/var/app/reports blackflag/php:test vendor/bin/phpunit -c phpunit.xml.dist
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)  
+
+notifications:
+  email: false
+
+  
