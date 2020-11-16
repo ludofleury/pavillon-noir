@@ -34,8 +34,9 @@ class Message
     protected array $data;
     /**
      * @var Event|null internal object cache purpose
+     * @see https://github.com/doctrine/orm/issues/7944 Making this class doctrine compliant
      */
-    protected ?Event $event;
+    protected ?Event $event = null;
 
     public function __construct(string $aggregateRootType, UuidInterface $aggregateRootId, $sequence, Event $event)
     {
