@@ -1,6 +1,6 @@
 <?php
 
-namespace BlackFlag\Concept;
+namespace BlackFlag\Character\Concept;
 
 use Exception;
 use EventSourcing\EventStore;

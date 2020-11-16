@@ -1,6 +1,6 @@
 <?php
 
-namespace BlackFlag\Concept\Event;
+namespace BlackFlag\Character\Concept\Event;
 
 use EventSourcing\Event;
 

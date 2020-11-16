@@ -1,11 +1,11 @@
 <?php
 
-namespace BlackFlag\Concept;
+namespace BlackFlag\Character\Concept;
 
-use BlackFlag\Concept\Event\ConceptCreated;
-use BlackFlag\Concept\Event\SetBackground;
-use BlackFlag\Concept\Event\SpentCharacteristicsPoints;
-use BlackFlag\Concept\Event\SpentExtraCharacteristicPoint;
+use BlackFlag\Character\Concept\Event\ConceptCreated;
+use BlackFlag\Character\Concept\Event\SetBackground;
+use BlackFlag\Character\Concept\Event\SpentCharacteristicsPoints;
+use BlackFlag\Character\Concept\Event\SpentExtraCharacteristicPoint;
 use EventSourcing\AggregateRoot;
 use Exception;
 use Ramsey\Uuid\Uuid;
