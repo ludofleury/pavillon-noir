@@ -3,7 +3,6 @@
 namespace EventSourcing;
 
 use Ramsey\Uuid\UuidInterface;
-use EventSourcing\EventStore\Message;
 
 abstract class AggregateRoot extends Entity
 {
@@ -25,7 +24,7 @@ abstract class AggregateRoot extends Entity
 
         foreach ($stream as $message) {
             ++$aggregateRoot->sequence;
-            $aggregateRoot->handle($message->getEvent());
+            $aggregateRoot->handleRecursively($message->getEvent());
         }
 
         return $aggregateRoot;

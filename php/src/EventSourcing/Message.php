@@ -1,42 +1,31 @@
 <?php
 
-namespace EventSourcing\EventStore;
+namespace EventSourcing;
 
 use DateTimeImmutable;
-use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use EventSourcing\Event;
 
-/**
- * @ORM\Entity(repositoryClass="EventSourcing\EventStore")
- * @ORM\Table(name="events")
- */
 class Message
 {
     /**
-     * @ORM\Id()
-     * @ORM\Column(type="uuid")
+     * @var UuidInterface Message unique identifier
      */
     private UuidInterface $id;
     /**
-     * @ORM\Column(type="string")
+     * @var string Aggregate root FQCN
      */
     protected string $aggregateRootType;
-    /**
-     * @ORM\Column(type="uuid")
-     */
+
     protected UuidInterface $aggregateRootId;
     /**
-     * @ORM\Column(type="integer")
+     * @var int Zero-indexed event sequence, unique per aggregate root
      */
     protected int $sequence;
-    /**
-     * @ORM\Column(type="date_immutable")
-     */
+
     protected DateTimeImmutable $recordedAt;
     /**
-     * @ORM\Column(type="string")
+     * @var string Event FQCN
      */
     protected string $eventType;
     /**
@@ -63,7 +52,7 @@ class Message
     public function getEvent(): Event
     {
         if ($this->event === null) {
-            $this->event = $this->eventType::fromArray($this->data);
+            $this->event = call_user_func_array([$this->eventType, 'fromArray'], [$this->data]);
         }
 
         return $this->event;
