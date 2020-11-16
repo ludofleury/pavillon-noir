@@ -3,7 +3,7 @@
 namespace EventSourcing\Testing;
 
 use EventSourcing\AggregateRoot;
-use EventSourcing\EventStore\Message;
+use EventSourcing\Message;
 use PHPUnit\Framework\Constraint\IsEqual;
 use PHPUnit\Framework\TestCase;
 

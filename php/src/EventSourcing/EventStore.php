@@ -8,5 +8,5 @@ interface EventStore
 {
     public function append(Stream $stream): void;
 
-    public function load(UuidInterface $aggregateRootId): Stream;
+    public function load(string $aggregateRootType, UuidInterface $aggregateRootId): Stream;
 }
