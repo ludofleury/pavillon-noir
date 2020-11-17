@@ -51,6 +51,6 @@ final class EventStore extends ServiceEntityRepository implements EventStoreInte
             throw new EventStoreException(sprintf('Unable to load event stream for %s "%s"', $aggregateRootType, $aggregateRootId), null, $exception);
         }
 
-        return new Stream($messages);
+        return new Stream(...$messages);
     }
 }

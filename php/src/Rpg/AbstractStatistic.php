@@ -13,7 +13,7 @@ abstract class AbstractStatistic
     protected ?int $minimum;
     protected ?int $maximum;
 
-    public function __construct(string $name, int $value, int $minimum = null, int $maximum = null)
+    public function __construct(string $name, int $value, ?int $minimum = null, ?int $maximum = null)
     {
         if ($maximum !== null && $minimum !== null && $minimum > $maximum) {
             throw new InvalidStatisticRequirementsException(static::class, $name, $minimum, $maximum);

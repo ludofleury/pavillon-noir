@@ -54,7 +54,7 @@ final class Character extends AggregateRoot
         return $this->id;
     }
 
-    protected function applyCharacterCreated(CharacterCreated $event)
+    protected function applyCharacterCreated(CharacterCreated $event): void
     {
         $this->firstname = $event->getFirstname();
         $this->lastname = $event->getLastname();

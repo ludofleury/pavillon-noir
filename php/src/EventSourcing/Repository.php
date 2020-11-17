@@ -21,7 +21,7 @@ abstract class Repository
         $this->eventBus = $eventBus;
     }
 
-    public function save(AggregateRoot $aggregateRoot)
+    public function save(AggregateRoot $aggregateRoot): void
     {
         $stream = $aggregateRoot->getUncommittedEvents();
         $this->eventStore->append($stream);
