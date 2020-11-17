@@ -21,7 +21,7 @@ class CharacterRepository extends EsRepository implements Repository
     public function load(UuidInterface $characterId): Character
     {
         try {
-            /* @var Character $character */
+            /** @var Character $character */
             $character = parent::load($characterId);
         } catch (AggregateRootNotFoundException $exception) {
             throw new CharacterNotFoundException(sprintf('Character "%s" not found', $characterId), null, $exception);

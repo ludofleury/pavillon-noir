@@ -8,6 +8,9 @@ abstract class AggregateRoot extends Entity
 {
     protected UuidInterface $id;
 
+    /**
+     * @var Message[]
+     */
     protected array $stream = [];
 
     protected int $sequence = -1;
@@ -17,7 +20,7 @@ abstract class AggregateRoot extends Entity
     /**
      * Load an AR from an existing event stream
      */
-    static public function load(UuidInterface $id, Stream $stream): self
+    public static function load(UuidInterface $id, Stream $stream): self
     {
         $aggregateRoot = new static();
         $aggregateRoot->id = $id;
@@ -32,7 +35,7 @@ abstract class AggregateRoot extends Entity
 
     public function getUncommittedEvents(): Stream
     {
-        $stream = new Stream($this->stream);
+        $stream = new Stream(...$this->stream);
         $this->stream = [];
 
         return $stream;

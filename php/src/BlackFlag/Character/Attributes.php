@@ -28,7 +28,7 @@ final class Attributes extends ChildEntity
         parent::__construct($character);
     }
 
-    protected function applyCharacterCreated(CharacterCreated $event)
+    protected function applyCharacterCreated(CharacterCreated $event): void
     {
         $attributes = $event->getAttributes();
         $rules = Attribute::getSupportedAttributes();

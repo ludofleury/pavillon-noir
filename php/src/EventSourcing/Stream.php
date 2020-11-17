@@ -10,9 +10,12 @@ use IteratorAggregate;
 
 final class Stream implements IteratorAggregate, Countable, ArrayAccess
 {
+    /**
+     * @var Message[]
+     */
     private array $events;
 
-    public function __construct(array $events)
+    public function __construct(Message ...$events)
     {
         $this->events = $events;
     }
