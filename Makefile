@@ -31,3 +31,5 @@ restart: ## restart local environement
 test: ## launch test suite & write report in php/reports/
 	docker-compose exec php vendor/bin/phpunit --testdox
 
+insights: ## local static analysis & insights
+	docker-compose exec php vendor/bin/phpinsights
