@@ -1,6 +1,6 @@
 # Black Flag
 
-[![Build Status](https://travis-ci.org/ludofleury/pavillon-noir.svg?branch=master)](https://travis-ci.org/ludofleury/pavillon-noir) [![codecov](https://codecov.io/gh/ludofleury/pavillon-noir/branch/master/graph/badge.svg)](https://codecov.io/gh/ludofleury/pavillon-noir)
+[![Build Status](https://travis-ci.com/ludofleury/pavillon-noir.svg?branch=master)](https://travis-ci.com/ludofleury/pavillon-noir) [![codecov](https://codecov.io/gh/ludofleury/pavillon-noir/branch/master/graph/badge.svg)](https://codecov.io/gh/ludofleury/pavillon-noir)
 
 PHP application designed to assist role-playing game session for the "Pavillon Noir" game.
 
