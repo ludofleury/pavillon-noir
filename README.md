@@ -1,4 +1,4 @@
-# Black Flag
+# :pirate_flag: Black Flag
 
 ![Build Status](https://github.com/ludofleury/pavillon-noir/workflows/ci/badge.svg?branch=master) [![codecov](https://codecov.io/gh/ludofleury/pavillon-noir/branch/master/graph/badge.svg)](https://codecov.io/gh/ludofleury/pavillon-noir)
 
