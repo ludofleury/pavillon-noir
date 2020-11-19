@@ -3,6 +3,7 @@
 namespace EventSourcing;
 
 use DateTimeImmutable;
+use EventSourcing\Exception\InvalidSequenceException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -39,9 +40,13 @@ class Message
      */
     protected ?Event $event = null;
 
-    public function __construct(string $aggregateRootType, UuidInterface $aggregateRootId, $sequence, Event $event)
+    public function __construct(string $aggregateRootType, UuidInterface $aggregateRootId, int $sequence, Event $event)
     {
-        $this->id = Uuid::uuid1();
+        if ($sequence < 0) {
+            throw new InvalidSequenceException(sprintf('Sequence cannot be negative (%d)', $sequence));
+        }
+
+        $this->id = Uuid::uuid4();
         $this->aggregateRootType = $aggregateRootType;
         $this->aggregateRootId = $aggregateRootId;
         $this->sequence = $sequence;
