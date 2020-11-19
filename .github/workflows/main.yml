@@ -61,6 +61,7 @@ jobs:
       - name: Publish coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
-          directory: ${{github.workspace}}/reports/
+          file: ${{github.workspace}}/reports/test/coverage/clover.xml
+          flags: unit-tests
           fail_ci_if_error: true
-          verbose: true
+          verbose: false
