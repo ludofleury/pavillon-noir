@@ -29,7 +29,8 @@ class Message
      */
     protected string $eventType;
     /**
-     * @ORM\Column(type="json", options={"jsonb": true})
+     * @var array Event normalized as (json) serializable array
+     * @see Event::toArray()
      */
     protected array $data;
     /**
@@ -48,6 +49,31 @@ class Message
         $this->eventType = get_class($event);
         $this->data = $event->toArray();
         $this->event = $event;
+    }
+
+    public function getId(): UuidInterface
+    {
+        return $this->id;
+    }
+
+    public function getAggregateRootType(): string
+    {
+        return $this->aggregateRootType;
+    }
+
+    public function getAggregateRootId(): UuidInterface
+    {
+        return $this->aggregateRootId;
+    }
+
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
+    public function getRecordedAt(): DateTimeImmutable
+    {
+        return $this->recordedAt;
     }
 
     public function getEvent(): Event
