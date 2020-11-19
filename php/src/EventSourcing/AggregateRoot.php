@@ -15,15 +15,14 @@ abstract class AggregateRoot extends Entity
 
     protected int $sequence = -1;
 
-    abstract protected function __construct();
+    public function __construct(UuidInterface $id)
+    {
+        $this->id = $id;
+    }
 
-    /**
-     * Load an AR from an existing event stream
-     */
     public static function load(UuidInterface $id, Stream $stream): self
     {
-        $aggregateRoot = new static();
-        $aggregateRoot->id = $id;
+        $aggregateRoot = new static($id);
 
         foreach ($stream as $message) {
             ++$aggregateRoot->sequence;
@@ -31,6 +30,11 @@ abstract class AggregateRoot extends Entity
         }
 
         return $aggregateRoot;
+    }
+
+    public function getId(): UuidInterface
+    {
+        return $this->id;
     }
 
     public function getUncommittedEvents(): Stream
@@ -41,9 +45,6 @@ abstract class AggregateRoot extends Entity
         return $stream;
     }
 
-    /**
-     * Record an event to the event stream and apply it to the AR
-     */
     protected function apply(Event $event): void
     {
         $this->handleRecursively($event);
@@ -56,6 +57,4 @@ abstract class AggregateRoot extends Entity
             $event
         );
     }
-
-    abstract public function getId(): UuidInterface;
 }

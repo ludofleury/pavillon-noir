@@ -5,7 +5,6 @@ namespace BlackFlag\Character;
 use BlackFlag\Character\Event\CharacterCreated;
 use EventSourcing\AggregateRoot;
 use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 
 final class Character extends AggregateRoot
 {
@@ -21,10 +20,6 @@ final class Character extends AggregateRoot
 
     private Attributes $attributes;
 
-    protected function __construct()
-    {
-    }
-
     public static function create(
         string $firstname,
         string $lastname,
@@ -33,8 +28,7 @@ final class Character extends AggregateRoot
         bool $gender,
         array $attributes
     ): Character {
-        $character = new self();
-        $character->id = Uuid::uuid4();
+        $character = new self(Uuid::uuid4());
 
         $event = new CharacterCreated(
             $firstname,
@@ -47,11 +41,6 @@ final class Character extends AggregateRoot
         $character->apply($event);
 
         return $character;
-    }
-
-    public function getId(): UuidInterface
-    {
-        return $this->id;
     }
 
     protected function applyCharacterCreated(CharacterCreated $event): void
